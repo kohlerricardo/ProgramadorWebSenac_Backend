@@ -32,9 +32,11 @@ Neste repositório serão colocados os arquivos contendo:
 
 
 ## Material Complementar
-| Backend | |
-|:---:|:---:|
-|Tutorial instalação FastAPI + Uvicorn||
+| Backend |
+|:---:|
+|Tutorial instalação FastAPI + Uvicorn|
+|[Lista de códigos de erro HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)|
+|[Métodos HTTP](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Reference/Methods)|
 
 
 
