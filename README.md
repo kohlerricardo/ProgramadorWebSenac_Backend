@@ -29,16 +29,16 @@ Neste repositório serão colocados os arquivos contendo:
 - Slides de conteúdo utilizados em sala.
 
 ## Exercícios de fixação
-
+[Lista 01](https://github.com/kohlerricardo/ProgramadorWebSenac_Backend/blob/main/Exercicios/Lista_01.md)
+[Lista 02](https://github.com/kohlerricardo/ProgramadorWebSenac_Backend/blob/main/Exercicios/Lista_02.md)
+[Lista 03](https://github.com/kohlerricardo/ProgramadorWebSenac_Backend/blob/main/Exercicios/Lista_03.md)
 
 ## Material Complementar
 | Backend |
 |:---:|
-|Tutorial instalação FastAPI + Uvicorn|
+|[Tutorial instalação FastAPI + Uvicorn](https://github.com/kohlerricardo/ProgramadorWebSenac_Backend/blob/main/ProjetoBase/Instala%C3%A7%C3%A3oFastapi.md)|
 |[Lista de códigos de erro HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)|
 |[Métodos HTTP](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Reference/Methods)|
-
-
 
 ### Links úteis
 #### Backend
