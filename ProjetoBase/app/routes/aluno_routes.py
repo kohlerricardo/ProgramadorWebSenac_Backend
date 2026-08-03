@@ -11,6 +11,8 @@ def get_all():
 
 @aluno_rotas.post("/alunos")
 def insert_aluno(parametro : dict):
-    id = parametro.get("id")
+    # Função next retorna o próximo valor de uma sequência, neste caso, com a sequencia gerada através da palavra yield dentro da função next_index
+    id = next(database.next_index())
+    print(f"{id} - {parametro}")
     database.insert(id,parametro)
     

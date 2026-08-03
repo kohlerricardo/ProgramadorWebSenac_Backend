@@ -1,31 +1,30 @@
-# Exercícios de Modelagem de Objetos e APIs com FastAPI
+# Exercícios de Modelagem de Objetos para APIs com FastAPI
 
-> **Objetivo:** Modelar classes Python e implementar rotas FastAPI para cada situação descrita.  
-> **Para cada exercício:** identifique o(s) objeto(s), defina seus atributos com tipos Python e implemente as rotas indicadas.
+> **Objetivo:** Modelar classes Python utilizando **Encapsulamento** (atributos protegidos/privados, *getters*, *setters* e *propriedades calculadas*) e implementar rotas FastAPI para cada situação descrita.  
 
----
-
-## Nível 1 — Básico
-
-> Um único objeto com atributos simples. Criar classes, definir atributos e como URLs representam recursos.
+> **Para cada exercício:** analisar as necessidades de proteção de dados e regras de negócio, defina os atributos e propriedades da classe e implemente as rotas indicadas.
 
 ---
 
 ### Exercício 01 — Ficha de aluno
 
-Você foi contratado para criar o sistema de cadastro de alunos de uma escola. Cada aluno tem nome, número de matrícula, curso e e-mail. O sistema precisa permitir consultar, cadastrar e atualizar essas informações.
+Você foi contratado para criar o sistema de cadastro de alunos de uma escola. Cada aluno possui nome, matrícula, curso e e-mail.
 
-**Objeto a modelar:** `Aluno`
+#### Validações necessárias:
+* **E-mail:** O e-mail não pode ser alterado diretamente para qualquer texto; deve passar por uma validação para garantir que possui um formato válido (contendo `@` e domínio).
+* **Matrícula:** Trata-se de um identificador imutável gerado na matrícula. Deve ser acessível apenas para leitura.
+* **Propriedade Calculada (`dominio_email`):** Uma propriedade que extrai dinamicamente o domínio do e-mail do aluno (ex: `escola.edu.br`).
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `nome` | `str` |
-| `matricula` | `str` |
-| `curso` | `str` |
-| `email` | `str` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `nome` | `str` | Getter/Setter (Não pode ser vazio) |
+| `matricula` | `str` | Somente Leitura (Definida na inicialização) |
+| `curso` | `str` | Getter/Setter |
+| `email` | `str` | Getter/Setter com validação de formato (`@`) |
+| `dominio_email` | `str` | **Propriedade Calculada:** Extrai o domínio a partir do e-mail |
 
 **Rotas a implementar:**
 
@@ -40,19 +39,23 @@ Você foi contratado para criar o sistema de cadastro de alunos de uma escola. C
 
 ### Exercício 02 — Cardápio de lanchonete
 
-Uma lanchonete quer exibir o cardápio na internet. Cada item tem nome, descrição, preço e uma indicação se está disponível hoje ou não. O atendente precisa conseguir marcar itens como indisponíveis quando acabarem.
+Uma lanchonete quer exibir o cardápio na internet. Cada item tem nome, descrição, preço e status de disponibilidade.
 
-**Objeto a modelar:** `ItemCardapio`
+#### Validações necessárias:
+* **Preço:** Não pode ser negativo nem igual a zero. Alterações de preço devem ser validadas.
+* **Propriedade Calculada (`preco_formatado`):** Retorna o preço formatado em moeda local (ex: `"R$ 25,50"`).
+* **Disponibilidade:** Alterar a disponibilidade deve validar se o item possui preço válido antes de ser ativado.
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `nome` | `str` |
-| `descricao` | `str` |
-| `preco` | `float` |
-| `disponivel` | `bool` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `nome` | `str` | Getter/Setter |
+| `descricao` | `str` | Getter/Setter |
+| `preco` | `float` | Getter/Setter (Valida valor $> 0$) |
+| `disponivel` | `bool` | Getter/Setter |
+| `preco_formatado` | `str` | **Propriedade Calculada:** Retorna string formatada como `R$ X,XX` |
 
 **Rotas a implementar:**
 
@@ -67,18 +70,21 @@ Uma lanchonete quer exibir o cardápio na internet. Cada item tem nome, descriç
 
 ### Exercício 03 — Agenda de contatos
 
-Você precisa criar uma agenda digital simples. Nela é possível guardar o nome, telefone e e-mail de cada contato. O usuário quer poder buscar contatos pelo nome sem precisar digitar o nome completo.
+Você precisa criar uma agenda digital simples com nome, telefone e e-mail de cada contato.
 
-**Objeto a modelar:** `Contato`
+#### Validações necessárias:
+* **Telefone:** Deve ser sanitizado e validado, aceitando apenas dígitos e garantindo o tamanho padrão.
+* **Propriedade Calculada (`inicial_nome`):** Retorna a letra inicial do nome em maiúsculo para fins de ordenação/agrupamento na interface.
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `nome` | `str` |
-| `telefone` | `str` |
-| `email` | `str` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `nome` | `str` | Getter/Setter (Capitaliza automaticamente) |
+| `telefone` | `str` | Getter/Setter (Filtra apenas números e valida tamanho) |
+| `email` | `str` | Getter/Setter |
+| `inicial_nome` | `str` | **Propriedade Calculada:** Retorna a primeira letra do nome |
 
 **Rotas a implementar:**
 
@@ -93,19 +99,22 @@ Você precisa criar uma agenda digital simples. Nela é possível guardar o nome
 
 ### Exercício 04 — Catálogo de filmes
 
-Um cineclube quer organizar os filmes que já assistiram coletivamente. Cada filme tem título, diretor, ano de lançamento e gênero. Os membros querem poder filtrar os filmes por gênero para encontrar os de drama, comédia, etc.
+Um cineclube quer organizar os filmes que assistiram, armazenando título, diretor, ano de lançamento e gênero.
 
-**Objeto a modelar:** `Filme`
+#### Validações necessárias:
+* **Ano de Lançamento:** Não pode ser no futuro nem anterior à invenção do cinema (ex: 1888).
+* **Propriedade Calculada (`idade_filme`):** Calcula quantos anos o filme possui com base no ano atual.
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `titulo` | `str` |
-| `diretor` | `str` |
-| `ano` | `int` |
-| `genero` | `str` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `titulo` | `str` | Getter/Setter |
+| `diretor` | `str` | Getter/Setter |
+| `ano` | `int` | Getter/Setter (Valida faixa $1888 \le ano \le ano\_atual$) |
+| `genero` | `str` | Getter/Setter |
+| `idade_filme` | `int` | **Propriedade Calculada:** Anos desde o lançamento |
 
 **Rotas a implementar:**
 
@@ -120,19 +129,24 @@ Um cineclube quer organizar os filmes que já assistiram coletivamente. Cada fil
 
 ### Exercício 05 — Lista de tarefas
 
-Um aplicativo de produtividade precisa de um backend para gerenciar tarefas. Cada tarefa tem um título, uma descrição e pode estar pendente ou concluída. O usuário quer ver separado o que já fez do que ainda falta.
+Um aplicativo de produtividade precisa gerenciar tarefas com título, descrição, status e data de criação.
 
-**Objeto a modelar:** `Tarefa`
+#### Validações necessárias:
+* **Status Concluída:** A transição de status deve registrar internamente a data de conclusão.
+* **Propriedade Calculada (`status_texto`):** Retorna `"Concluída"` ou `"Pendente"`.
+* **Propriedade Calculada (`dias_em_aberto`):** Calcula quantos dias a tarefa está aberta caso não tenha sido concluída.
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `titulo` | `str` |
-| `descricao` | `str` |
-| `concluida` | `bool` |
-| `criada_em` | `datetime` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `titulo` | `str` | Getter/Setter |
+| `descricao` | `str` | Getter/Setter |
+| `concluida` | `bool` | Getter/Setter (Modificar para `True` ajusta `data_conclusao`) |
+| `criada_em` | `datetime` | Somente Leitura |
+| `status_texto` | `str` | **Propriedade Calculada:** Retorna rótulo amigável |
+| `dias_em_aberto` | `int` | **Propriedade Calculada:** Dias decorridos desde a criação |
 
 **Rotas a implementar:**
 
@@ -147,19 +161,22 @@ Um aplicativo de produtividade precisa de um backend para gerenciar tarefas. Cad
 
 ### Exercício 06 — Registro de notas
 
-Um professor precisa de um sistema para lançar as notas dos alunos por disciplina. Cada nota tem o valor (de 0 a 10), o nome da disciplina e a data em que foi lançada. O professor também quer poder consultar apenas as notas de um aluno específico.
+Um professor precisa de um sistema para lançar notas de alunos por disciplina.
 
-**Objeto a modelar:** `Nota`
+#### Validações necessárias:
+* **Valor da Nota:** Deve estar estritamente entre `0.0` e `10.0`. Lançamentos fora dessa faixa devem ser rejeitados.
+* **Propriedade Calculada (`situacao`):** Retorna `"Aprovado"` se a nota for $\ge 7.0$, `"Recuperação"` entre $5.0$ e $6.9$, e `"Reprovado"` se $< 5.0$.
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `aluno_id` | `int` |
-| `disciplina` | `str` |
-| `valor` | `float` |
-| `data_lancamento` | `date` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `aluno_id` | `int` | Somente Leitura |
+| `disciplina` | `str` | Getter/Setter |
+| `valor` | `float` | Getter/Setter (Valida intervalo entre $0.0$ e $10.0$) |
+| `data_lancamento` | `date` | Somente Leitura |
+| `situacao` | `str` | **Propriedade Calculada:** Avalia situação com base na nota |
 
 **Rotas a implementar:**
 
@@ -174,19 +191,23 @@ Um professor precisa de um sistema para lançar as notas dos alunos por discipli
 
 ### Exercício 07 — Acervo de livros
 
-Uma pequena biblioteca comunitária quer catalogar seus livros para que os frequentadores saibam o que está disponível. Cada livro tem título, autor, ISBN e o número de exemplares em estoque. É possível buscar livros por autor.
+Uma biblioteca comunitária quer catalogar seus livros (título, autor, ISBN e exemplares em estoque).
 
-**Objeto a modelar:** `Livro`
+#### Validações necessárias:
+* **ISBN:** Deve passar por validação de formato (apenas números e hífens com tamanho válido).
+* **Exemplares:** Não pode ter valor negativo.
+* **Propriedade Calculada (`em_estoque`):** Propriedade booleana calculada que retorna `True` se `exemplares > 0`.
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `titulo` | `str` |
-| `autor` | `str` |
-| `isbn` | `str` |
-| `exemplares` | `int` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `titulo` | `str` | Getter/Setter |
+| `autor` | `str` | Getter/Setter |
+| `isbn` | `str` | Getter/Setter (Valida formato ISBN) |
+| `exemplares` | `int` | Getter/Setter (Valida valor $\ge 0$) |
+| `em_estoque` | `bool` | **Propriedade Calculada:** Retorna `exemplares > 0` |
 
 **Rotas a implementar:**
 
@@ -202,20 +223,23 @@ Uma pequena biblioteca comunitária quer catalogar seus livros para que os frequ
 
 ### Exercício 08 — Catálogo de plantas
 
-Um viveiro de plantas quer publicar seu catálogo online. Cada planta tem nome popular, nome científico, tipo (árvore, arbusto, suculenta…), preço e se está em estoque. O cliente quer filtrar por tipo e por disponibilidade.
+Um viveiro publica seu catálogo online com plantas, preços e dados de cultivo.
 
-**Objeto a modelar:** `Planta`
+#### Validações necessárias:
+* **Nome Científico:** Deve ser automaticamente formatado em itálico/capitalizado apropriadamente.
+* **Preço:** Deve ser maior que zero.
+* **Propriedade Calculada (`categoria_porte`):** Classificação baseada no tipo de planta.
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `nome_popular` | `str` |
-| `nome_cientifico` | `str` |
-| `tipo` | `str` |
-| `preco` | `float` |
-| `em_estoque` | `bool` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `nome_popular` | `str` | Getter/Setter |
+| `nome_cientifico` | `str` | Getter/Setter (Formatação padronizada) |
+| `tipo` | `str` | Getter/Setter |
+| `preco` | `float` | Getter/Setter (Valida preço $> 0$) |
+| `em_estoque` | `bool` | Getter/Setter |
 
 **Rotas a implementar:**
 
@@ -231,20 +255,24 @@ Um viveiro de plantas quer publicar seu catálogo online. Cada planta tem nome p
 
 ### Exercício 09 — Registro de animais do abrigo
 
-Um abrigo de animais precisa de um sistema para registrar os animais resgatados. Cada animal tem nome, espécie, raça, idade aproximada e se já foi adotado. O funcionário quer listar apenas os disponíveis para adoção.
+Um abrigo de animais registra os pets resgatados.
 
-**Objeto a modelar:** `Animal`
+#### Validações necessárias:
+* **Idade:** Não pode ser negativa.
+* **Status Adoção:** Uma vez marcado como adotado, impede que certos dados do animal sejam alterados sem reabertura de processo.
+* **Propriedade Calculada (`fase_vida`):** Retorna `"Filhote"`, `"Adulto"` ou `"Idoso"` com base na idade e espécie.
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `nome` | `str` |
-| `especie` | `str` |
-| `raca` | `str` |
-| `idade` | `int` |
-| `adotado` | `bool` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `nome` | `str` | Getter/Setter |
+| `especie` | `str` | Getter/Setter |
+| `raca` | `str` | Getter/Setter |
+| `idade` | `int` | Getter/Setter (Valida idade $\ge 0$) |
+| `adotado` | `bool` | Getter/Setter |
+| `fase_vida` | `str` | **Propriedade Calculada:** Derivada da idade e espécie |
 
 **Rotas a implementar:**
 
@@ -260,20 +288,24 @@ Um abrigo de animais precisa de um sistema para registrar os animais resgatados.
 
 ### Exercício 10 — Catálogo de cursos online
 
-Uma plataforma de cursos online precisa de um backend para listar seus cursos. Cada curso tem título, instrutor, carga horária, nível (iniciante, intermediário, avançado) e preço. O aluno quer filtrar por nível.
+Plataforma de cursos online gerencia disciplinas, carga horária e valores.
 
-**Objeto a modelar:** `Curso`
+#### Validações necessárias:
+* **Carga Horária:** Deve ser um número inteiro positivo (mínimo de 1 hora).
+* **Nível:** Deve aceitar apenas os valores restritos: `"iniciante"`, `"intermediario"`, `"avancado"`.
+* **Propriedade Calculada (`valor_por_hora`):** Retorna o custo por hora do curso (`preco / carga_horaria`).
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `titulo` | `str` |
-| `instrutor` | `str` |
-| `carga_horaria` | `int` |
-| `nivel` | `str` |
-| `preco` | `float` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `titulo` | `str` | Getter/Setter |
+| `instrutor` | `str` | Getter/Setter |
+| `carga_horaria` | `int` | Getter/Setter (Valida valor $> 0$) |
+| `nivel` | `str` | Getter/Setter (Valida valores permitidos) |
+| `preco` | `float` | Getter/Setter (Valida valor $\ge 0$) |
+| `valor_por_hora` | `float` | **Propriedade Calculada:** `preco / carga_horaria` |
 
 **Rotas a implementar:**
 
@@ -289,19 +321,23 @@ Uma plataforma de cursos online precisa de um backend para listar seus cursos. C
 
 ### Exercício 11 — Inventário de equipamentos de TI
 
-O setor de TI de uma empresa precisa controlar seus equipamentos: notebooks, monitores, teclados etc. Cada item tem número de patrimônio, descrição, localização e situação (ativo, em manutenção, descartado). Eles querem filtrar por situação.
+O setor de TI controla o patrimônio de hardware da empresa.
 
-**Objeto a modelar:** `Equipamento`
+#### Validações necessárias:
+* **Patrimônio:** Código imutável com padrão alfanumérico específico.
+* **Situação:** Permitir apenas transições válidas de estado (`"ativo"`, `"em manutenção"`, `"descartado"`).
+* **Propriedade Calculada (`necessita_substituicao`):** Retorna `True` se a situação for `"descartado"` ou se estiver em manutenção por mais de um período crítico.
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `patrimonio` | `str` |
-| `descricao` | `str` |
-| `localizacao` | `str` |
-| `situacao` | `str` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `patrimonio` | `str` | Somente Leitura (Definido no cadastro) |
+| `descricao` | `str` | Getter/Setter |
+| `localizacao` | `str` | Getter/Setter |
+| `situacao` | `str` | Getter/Setter (Valida valores válidos de estado) |
+| `necessita_substituicao`| `bool` | **Propriedade Calculada:** Avalia status de descarte/manutenção |
 
 **Rotas a implementar:**
 
@@ -317,20 +353,26 @@ O setor de TI de uma empresa precisa controlar seus equipamentos: notebooks, mon
 
 ### Exercício 12 — Diário de leituras
 
-Uma pessoa quer registrar os livros que está lendo ou já leu. Para cada leitura ela anota o título do livro, o autor, a data em que começou, a data em que terminou (pode estar em branco se ainda estiver lendo) e uma avaliação de 1 a 5 estrelas.
+Registro pessoal de livros lidos e em andamento.
 
-**Objeto a modelar:** `Leitura`
+#### Validações necessárias:
+* **Avaliação:** Só pode ser atribuída se a leitura foi concluída (`data_fim` preenchida) e o valor deve estar entre 1 e 5.
+* **Data Fim:** Não pode ser anterior à `data_inicio`.
+* **Propriedade Calculada (`concluida`):** Retorna `True` se `data_fim` não for nula.
+* **Propriedade Calculada (`dias_de_leitura`):** Duração total da leitura em dias.
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `titulo` | `str` |
-| `autor` | `str` |
-| `data_inicio` | `date` |
-| `data_fim` | `date` ou `None` |
-| `avaliacao` | `int` ou `None` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `titulo` | `str` | Getter/Setter |
+| `autor` | `str` | Getter/Setter |
+| `data_inicio` | `date` | Getter/Setter |
+| `data_fim` | `date` ou `None` | Getter/Setter (Valida $\ge data\_inicio$) |
+| `avaliacao` | `int` ou `None` | Getter/Setter (Exige `data_fim` e valida $1 \le nota \le 5$) |
+| `concluida` | `bool` | **Propriedade Calculada:** Check de preenchimento da `data_fim` |
+| `dias_de_leitura` | `int` | **Propriedade Calculada:** Diferença em dias entre início e fim/hoje |
 
 **Rotas a implementar:**
 
@@ -346,19 +388,23 @@ Uma pessoa quer registrar os livros que está lendo ou já leu. Para cada leitur
 
 ### Exercício 13 — Cardápio nutricional
 
-Uma nutricionista quer publicar opções de refeições para seus pacientes. Cada refeição tem nome, tipo (café da manhã, almoço, jantar, lanche), quantidade de calorias e uma lista dos ingredientes principais. Os pacientes filtram por tipo de refeição e por limite de calorias.
+Publicação de opções de refeições para acompanhamento nutricional.
 
-**Objeto a modelar:** `Refeicao`
+#### Validações necessárias:
+* **Calorias:** Valor obrigatoriamente positivo.
+* **Ingredientes:** A lista de ingredientes deve ser protegida contra modificações diretas (retornar cópia no getter).
+* **Propriedade Calculada (`densidade_calorica`):** Classificação da refeição (`"Leve"`, `"Moderada"`, `"Hipercalórica"`).
 
-**Atributos:**
+**Atributos e Propriedades:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `nome` | `str` |
-| `tipo` | `str` |
-| `calorias` | `int` |
-| `ingredientes` | `list[str]` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Público / Somente Leitura |
+| `nome` | `str` | Getter/Setter |
+| `tipo` | `str` | Getter/Setter |
+| `calorias` | `int` | Getter/Setter (Valida valor $> 0$) |
+| `ingredientes` | `list[str]` | Getter/Setter (Retorna cópia para evitar mutação indevida) |
+| `densidade_calorica` | `str` | **Propriedade Calculada:** Retorna nível calórico |
 
 **Rotas a implementar:**
 
@@ -374,34 +420,37 @@ Uma nutricionista quer publicar opções de refeições para seus pacientes. Cad
 
 ## Nível 2 — Intermediário
 
-> Dois ou mais objetos relacionados entre si. O sistema precisa verificar regras que envolvem mais de um objeto ao mesmo tempo.
+> Objetos relacionados com regras de integridade e cálculos que combinam atributos.
 
 ---
 
 ### Exercício 14 — Sistema de reserva de mesas
 
-Um restaurante precisa controlar suas mesas e reservas. Cada mesa tem um número e uma capacidade máxima de pessoas. Uma reserva vincula uma mesa a um cliente em uma data e horário específicos, com o número de pessoas do grupo. Antes de aceitar uma reserva, o sistema deve checar se a mesa existe e se a quantidade de pessoas não excede a capacidade.
+Controle de mesas e agendamentos em um restaurante.
 
-**Objetos a modelar:** `Mesa` e `Reserva`
+#### Validações necessárias:
+* **Reserva -> Pessoas:** A quantidade de pessoas da reserva não pode ultrapassar a capacidade da mesa vinculada.
+* **Mesa -> Capacidade:** Deve ser maior que zero.
+* **Propriedade Calculada (`mesa_ocupada`):** Verifica dinamicamente se a mesa possui reservas confirmadas na data/horário atual.
 
-**Atributos — Mesa:**
+**Atributos e Propriedades — Mesa:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `numero` | `int` |
-| `capacidade` | `int` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `numero` | `int` | Getter/Setter |
+| `capacidade` | `int` | Getter/Setter (Valida valor $> 0$) |
 
-**Atributos — Reserva:**
+**Atributos e Propriedades — Reserva:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `mesa_id` | `int` |
-| `cliente_nome` | `str` |
-| `data` | `date` |
-| `horario` | `str` |
-| `pessoas` | `int` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `mesa_id` | `int` | Somente Leitura |
+| `cliente_nome` | `str` | Getter/Setter |
+| `data` | `date` | Getter/Setter (Não permite datas passadas) |
+| `horario` | `str` | Getter/Setter |
+| `pessoas` | `int` | Getter/Setter (Valida $\le$ capacidade da mesa) |
 
 **Rotas a implementar:**
 
@@ -417,28 +466,31 @@ Um restaurante precisa controlar suas mesas e reservas. Cada mesa tem um número
 
 ### Exercício 15 — Biblioteca com empréstimos
 
-Uma biblioteca registra livros e permite que leitores os emprestem. Um livro tem título, autor e um indicador de disponibilidade. Um empréstimo registra qual livro saiu, para qual leitor, quando foi retirado e qual a data prevista de devolução. O sistema só deve aceitar o empréstimo se o livro estiver disponível.
+Empréstimo de livros para leitores cadastrados.
 
-**Objetos a modelar:** `Livro` e `Emprestimo`
+#### Validações necessárias:
+* **Empréstimo -> Status do Livro:** O empréstimo só pode ser efetuado se o livro estiver marcado como `disponivel == True`. Ao emprestar, a disponibilidade do livro deve ser alterada internamente.
+* **Propriedade Calculada (`em_atraso`):** Verifica se a data atual é posterior à `data_prevista` sem ter havido devolução.
 
-**Atributos — Livro:**
+**Atributos e Propriedades — Livro:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `titulo` | `str` |
-| `autor` | `str` |
-| `disponivel` | `bool` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `titulo` | `str` | Getter/Setter |
+| `autor` | `str` | Getter/Setter |
+| `disponivel` | `bool` | Getter/Setter (Acesso controlado por operações de empréstimo) |
 
-**Atributos — Emprestimo:**
+**Atributos e Propriedades — Emprestimo:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `livro_id` | `int` |
-| `leitor_nome` | `str` |
-| `data_emprestimo` | `date` |
-| `data_prevista` | `date` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `livro_id` | `int` | Somente Leitura |
+| `leitor_nome` | `str` | Getter/Setter |
+| `data_emprestimo` | `date` | Somente Leitura |
+| `data_prevista` | `date` | Getter/Setter (Deve ser pós data de empréstimo) |
+| `em_atraso` | `bool` | **Propriedade Calculada:** Comparação de `data_prevista` com a data atual |
 
 **Rotas a implementar:**
 
@@ -454,28 +506,32 @@ Uma biblioteca registra livros e permite que leitores os emprestem. Um livro tem
 
 ### Exercício 16 — Controle de ponto de funcionários
 
-Uma empresa precisa registrar a entrada e saída de cada funcionário. O funcionário tem nome, cargo e departamento. Cada registro de ponto guarda o horário de entrada e de saída. O sistema calcula automaticamente as horas trabalhadas ao registrar a saída. O gestor pode consultar o ponto de um funcionário em uma data específica.
+Registro de horários de trabalho de funcionários.
 
-**Objetos a modelar:** `Funcionario` e `RegistroPonto`
+#### Validações necessárias:
+* **Horário de Saída:** A saída deve ser obrigatoriamente posterior ao horário de entrada.
+* **Propriedade Calculada (`horas_trabalhadas`):** Propriedade derivada do cálculo `(saida - entrada)` convertida para horas decimais.
+* **Propriedade Calculada (`ponto_aberto`):** Retorna `True` se houver entrada registrada sem saída equivalente.
 
-**Atributos — Funcionario:**
+**Atributos e Propriedades — Funcionario:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `nome` | `str` |
-| `cargo` | `str` |
-| `departamento` | `str` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `nome` | `str` | Getter/Setter |
+| `cargo` | `str` | Getter/Setter |
+| `departamento` | `str` | Getter/Setter |
 
-**Atributos — RegistroPonto:**
+**Atributos e Propriedades — RegistroPonto:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `funcionario_id` | `int` |
-| `entrada` | `datetime` |
-| `saida` | `datetime` ou `None` |
-| `horas_trabalhadas` | `float` ou `None` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `funcionario_id` | `int` | Somente Leitura |
+| `entrada` | `datetime` | Somente Leitura |
+| `saida` | `datetime` ou `None` | Getter/Setter (Valida se $> entrada$) |
+| `horas_trabalhadas` | `float` ou `None` | **Propriedade Calculada:** Diferença calculada entre entrada e saída |
+| `ponto_aberto` | `bool` | **Propriedade Calculada:** Retorna `True` se `saida is None` |
 
 **Rotas a implementar:**
 
@@ -490,36 +546,39 @@ Uma empresa precisa registrar a entrada e saída de cada funcionário. O funcion
 
 ### Exercício 17 — Pedidos de uma loja virtual
 
-Uma loja virtual precisa registrar pedidos. Um pedido pertence a um cliente e pode conter vários itens, cada um com um produto e uma quantidade. O total do pedido deve ser calculado automaticamente. Pedidos passam por estados: pendente, pago e enviado.
+Gerenciamento de vendas, estoque de produtos e cálculo de itens.
 
-**Objetos a modelar:** `Produto`, `Pedido` e `ItemPedido`
+#### Validações necessárias:
+* **ItemPedido -> Estoque:** Adicionar um item valida se o produto possui quantidade suficiente em estoque.
+* **Propriedade Calculada (`subtotal` em ItemPedido):** Calculado como `quantidade * preco_unitario`.
+* **Propriedade Calculada (`total` em Pedido):** Soma automatizada dos subtotais de todos os itens vinculados ao pedido.
 
-**Atributos — Produto:**
+**Atributos e Propriedades — Produto:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `nome` | `str` |
-| `preco` | `float` |
-| `estoque` | `int` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `nome` | `str` | Getter/Setter |
+| `preco` | `float` | Getter/Setter (Valida valor $> 0$) |
+| `estoque` | `int` | Getter/Setter (Valida valor $\ge 0$) |
 
-**Atributos — Pedido:**
+**Atributos e Propriedades — ItemPedido:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `cliente` | `str` |
-| `status` | `str` |
-| `total` | `float` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `pedido_id` | `int` | Somente Leitura |
+| `produto_id` | `int` | Somente Leitura |
+| `quantidade` | `int` | Getter/Setter (Valida se $\le$ estoque) |
+| `subtotal` | `float` | **Propriedade Calculada:** `quantidade * preco_produto` |
 
-**Atributos — ItemPedido:**
+**Atributos e Propriedades — Pedido:**
 
-| Atributo | Tipo |
-|---|---|
-| `pedido_id` | `int` |
-| `produto_id` | `int` |
-| `quantidade` | `int` |
-| `subtotal` | `float` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `cliente` | `str` | Getter/Setter |
+| `status` | `str` | Getter/Setter (Valida transição: pendente -> pago -> enviado) |
+| `total` | `float` | **Propriedade Calculada:** Soma de todos os `subtotal` dos itens |
 
 **Rotas a implementar:**
 
@@ -535,37 +594,41 @@ Uma loja virtual precisa registrar pedidos. Um pedido pertence a um cliente e po
 
 ### Exercício 18 — Clínica veterinária
 
-Uma clínica veterinária atende pets e seus donos. Um dono pode ter vários pets. Cada pet tem nome, espécie e data de nascimento. As consultas registram qual pet foi atendido, qual veterinário atendeu, a data e o diagnóstico. O sistema deve permitir consultar o histórico de consultas de um pet.
+Cadastro de tutores, pets e consultas médicas veterinárias.
 
-**Objetos a modelar:** `Dono`, `Pet` e `Consulta`
+#### Validações necessárias:
+* **Data de Nascimento (Pet):** Não pode ser no futuro.
+* **Propriedade Calculada (`idade_anos` em Pet):** Calcula a idade exata com base na data de nascimento e no dia atual.
+* **Consulta:** Exige vínculo válido com pet cadastrado.
 
-**Atributos — Dono:**
+**Atributos e Propriedades — Dono:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `nome` | `str` |
-| `telefone` | `str` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `nome` | `str` | Getter/Setter |
+| `telefone` | `str` | Getter/Setter (Validação numérica) |
 
-**Atributos — Pet:**
+**Atributos e Propriedades — Pet:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `dono_id` | `int` |
-| `nome` | `str` |
-| `especie` | `str` |
-| `nascimento` | `date` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `dono_id` | `int` | Somente Leitura |
+| `nome` | `str` | Getter/Setter |
+| `especie` | `str` | Getter/Setter |
+| `nascimento` | `date` | Getter/Setter (Valida data $\le$ hoje) |
+| `idade_anos` | `int` | **Propriedade Calculada:** Idade baseada no nascimento |
 
-**Atributos — Consulta:**
+**Atributos e Propriedades — Consulta:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `pet_id` | `int` |
-| `veterinario` | `str` |
-| `data` | `date` |
-| `diagnostico` | `str` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `pet_id` | `int` | Somente Leitura |
+| `veterinario` | `str` | Getter/Setter |
+| `data` | `date` | Getter/Setter |
+| `diagnostico` | `str` | Getter/Setter |
 
 **Rotas a implementar:**
 
@@ -581,29 +644,33 @@ Uma clínica veterinária atende pets e seus donos. Um dono pode ter vários pet
 
 ### Exercício 19 — Estacionamento com vagas
 
-Um estacionamento tem vagas numeradas. Quando um veículo entra, um ticket é gerado com a placa e o horário de entrada. Quando o veículo sai, o ticket é encerrado e o sistema calcula o valor a pagar (R$ 5,00 por hora, frações cobradas como hora cheia). O gestor quer ver quais vagas estão ocupadas no momento.
+Gestão de ocupação e tarifação de veículos.
 
-**Objetos a modelar:** `Vaga` e `Ticket`
+#### Validações necessárias:
+* **Ticket -> Horário de Saída:** Deve ser maior que o horário de entrada.
+* **Propriedade Calculada (`duracao_horas`):** Calcula a quantidade total de horas (arredondado para cima para frações).
+* **Propriedade Calculada (`valor_total`):** Calcula a taxa cobrada multiplicando a `duracao_horas` pela tarifa vigente (R$ 5,00/hora).
 
-**Atributos — Vaga:**
+**Atributos e Propriedades — Vaga:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `numero` | `int` |
-| `tipo` | `str` |
-| `ocupada` | `bool` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `numero` | `int` | Getter/Setter |
+| `tipo` | `str` | Getter/Setter |
+| `ocupada` | `bool` | Getter/Setter (Atualizado com base nos tickets ativos) |
 
-**Atributos — Ticket:**
+**Atributos e Propriedades — Ticket:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `vaga_id` | `int` |
-| `placa` | `str` |
-| `entrada` | `datetime` |
-| `saida` | `datetime` ou `None` |
-| `valor` | `float` ou `None` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `vaga_id` | `int` | Somente Leitura |
+| `placa` | `str` | Getter/Setter (Valida formato de placa) |
+| `entrada` | `datetime` | Somente Leitura |
+| `saida` | `datetime` ou `None` | Getter/Setter (Valida se $> entrada$) |
+| `duracao_horas` | `int` | **Propriedade Calculada:** Horas cobradas (teto de frações) |
+| `valor_total` | `float` | **Propriedade Calculada:** `duracao_horas * 5.0` |
 
 **Rotas a implementar:**
 
@@ -618,28 +685,32 @@ Um estacionamento tem vagas numeradas. Quando um veículo entra, um ticket é ge
 
 ### Exercício 20 — Controle de medicamentos hospitalares
 
-Um hospital precisa controlar o estoque de medicamentos. Cada medicamento tem nome, quantidade em estoque e um estoque mínimo de segurança. Quando um medicamento é dispensado para um paciente, a quantidade em estoque diminui. O sistema deve impedir a dispensação se não houver estoque suficiente e alertar quando um medicamento estiver abaixo do mínimo.
+Controle estrito de estoque hospitalar e alertas de reposição.
 
-**Objetos a modelar:** `Medicamento` e `Dispensacao`
+#### Validações necessárias:
+* **Estoque Atual:** Impedir diretamente valores negativos. Qualquer dispensação que exceda o estoque atual deve ser bloqueada.
+* **Propriedade Calculada (`abaixo_do_minimo`):** Retorna `True` se `estoque_atual < estoque_minimo`.
+* **Dispensação -> Quantidade:** Deve ser maior que zero e menor ou igual ao estoque do medicamento associado.
 
-**Atributos — Medicamento:**
+**Atributos e Propriedades — Medicamento:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `nome` | `str` |
-| `estoque_atual` | `int` |
-| `estoque_minimo` | `int` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `nome` | `str` | Getter/Setter |
+| `estoque_atual` | `int` | Getter/Setter (Garante valor $\ge 0$) |
+| `estoque_minimo` | `int` | Getter/Setter (Garante valor $> 0$) |
+| `abaixo_do_minimo` | `bool` | **Propriedade Calculada:** `estoque_atual < estoque_minimo` |
 
-**Atributos — Dispensacao:**
+**Atributos e Propriedades — Dispensacao:**
 
-| Atributo | Tipo |
-|---|---|
-| `id` | `int` |
-| `medicamento_id` | `int` |
-| `paciente` | `str` |
-| `quantidade` | `int` |
-| `data` | `datetime` |
+| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+|---|---|---|
+| `id` | `int` | Somente Leitura |
+| `medicamento_id` | `int` | Somente Leitura |
+| `paciente` | `str` | Getter/Setter |
+| `quantidade` | `int` | Getter/Setter (Valida se $> 0$ e $\le$ estoque) |
+| `data` | `datetime` | Somente Leitura |
 
 **Rotas a implementar:**
 
@@ -651,5 +722,3 @@ Um hospital precisa controlar o estoque de medicamentos. Cada medicamento tem no
 | `GET` | `/medicamentos/{id}/dispensacoes` | Histórico de dispensações |
 
 ---
-
-*20 exercícios · 13 de nível 1 · 7 de nível 2 · Python 3.12+ · FastAPI · Pydantic v2*
