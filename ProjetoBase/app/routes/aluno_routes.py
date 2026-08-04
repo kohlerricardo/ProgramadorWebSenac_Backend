@@ -10,7 +10,9 @@ def get_all():
     return database.retrieve()
 
 @aluno_rotas.post("/alunos")
-def insert_aluno(parametro : dict):
+def insert_aluno(parametro : Aluno):
+    print(f"{parametro.dominio_email}")
+    return
     # Função next retorna o próximo valor de uma sequência, neste caso, com a sequencia gerada através da palavra yield dentro da função next_index
     id = next(database.next_index())
     print(f"{id} - {parametro}")

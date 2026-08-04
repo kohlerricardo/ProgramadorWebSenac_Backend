@@ -17,13 +17,13 @@ Você foi contratado para criar o sistema de cadastro de alunos de uma escola. C
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
-| `nome` | `str` | Getter/Setter (Não pode ser vazio) |
+| `id` | `int` | Somente Leitura |
+| `nome` | `str` |  (Não pode ser vazio) |
 | `matricula` | `str` | Somente Leitura (Definida na inicialização) |
-| `curso` | `str` | Getter/Setter |
-| `email` | `str` | Getter/Setter com validação de formato (`@`) |
+| `curso` | `str` |  |
+| `email` | `str` |  com validação de formato (`@`) |
 | `dominio_email` | `str` | **Propriedade Calculada:** Extrai o domínio a partir do e-mail |
 
 **Rotas a implementar:**
@@ -48,13 +48,13 @@ Uma lanchonete quer exibir o cardápio na internet. Cada item tem nome, descriç
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
-| `nome` | `str` | Getter/Setter |
-| `descricao` | `str` | Getter/Setter |
-| `preco` | `float` | Getter/Setter (Valida valor $> 0$) |
-| `disponivel` | `bool` | Getter/Setter |
+| `id` | `int` | Somente Leitura |
+| `nome` | `str` |  |
+| `descricao` | `str` |  |
+| `preco` | `float` |  (Validação valor $> 0$) |
+| `disponivel` | `bool` |  |
 | `preco_formatado` | `str` | **Propriedade Calculada:** Retorna string formatada como `R$ X,XX` |
 
 **Rotas a implementar:**
@@ -78,12 +78,12 @@ Você precisa criar uma agenda digital simples com nome, telefone e e-mail de ca
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
-| `nome` | `str` | Getter/Setter (Capitaliza automaticamente) |
-| `telefone` | `str` | Getter/Setter (Filtra apenas números e valida tamanho) |
-| `email` | `str` | Getter/Setter |
+| `id` | `int` | Somente Leitura |
+| `nome` | `str` |  (Capitaliza automaticamente) |
+| `telefone` | `str` |  (Filtra apenas números e valida tamanho) |
+| `email` | `str` |  |
 | `inicial_nome` | `str` | **Propriedade Calculada:** Retorna a primeira letra do nome |
 
 **Rotas a implementar:**
@@ -107,13 +107,13 @@ Um cineclube quer organizar os filmes que assistiram, armazenando título, diret
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
-| `titulo` | `str` | Getter/Setter |
-| `diretor` | `str` | Getter/Setter |
-| `ano` | `int` | Getter/Setter (Valida faixa $1888 \le ano \le ano\_atual$) |
-| `genero` | `str` | Getter/Setter |
+| `id` | `int` | Somente Leitura |
+| `titulo` | `str` |  |
+| `diretor` | `str` |  |
+| `ano` | `int` |  (Valida faixa $1888 \le ano \le ano\_atual$) |
+| `genero` | `str` |  |
 | `idade_filme` | `int` | **Propriedade Calculada:** Anos desde o lançamento |
 
 **Rotas a implementar:**
@@ -138,12 +138,12 @@ Um aplicativo de produtividade precisa gerenciar tarefas com título, descriçã
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
-| `titulo` | `str` | Getter/Setter |
-| `descricao` | `str` | Getter/Setter |
-| `concluida` | `bool` | Getter/Setter (Modificar para `True` ajusta `data_conclusao`) |
+| `id` | `int` | Somente Leitura |
+| `titulo` | `str` |  |
+| `descricao` | `str` |  |
+| `concluida` | `bool` |  (Modificar para `True` ajusta `data_conclusao`) |
 | `criada_em` | `datetime` | Somente Leitura |
 | `status_texto` | `str` | **Propriedade Calculada:** Retorna rótulo amigável |
 | `dias_em_aberto` | `int` | **Propriedade Calculada:** Dias decorridos desde a criação |
@@ -169,12 +169,12 @@ Um professor precisa de um sistema para lançar notas de alunos por disciplina.
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
+| `id` | `int` | Somente Leitura |
 | `aluno_id` | `int` | Somente Leitura |
-| `disciplina` | `str` | Getter/Setter |
-| `valor` | `float` | Getter/Setter (Valida intervalo entre $0.0$ e $10.0$) |
+| `disciplina` | `str` |  |
+| `valor` | `float` |  (Valida intervalo entre $0.0$ e $10.0$) |
 | `data_lancamento` | `date` | Somente Leitura |
 | `situacao` | `str` | **Propriedade Calculada:** Avalia situação com base na nota |
 
@@ -200,13 +200,13 @@ Uma biblioteca comunitária quer catalogar seus livros (título, autor, ISBN e e
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
-| `titulo` | `str` | Getter/Setter |
-| `autor` | `str` | Getter/Setter |
-| `isbn` | `str` | Getter/Setter (Valida formato ISBN) |
-| `exemplares` | `int` | Getter/Setter (Valida valor $\ge 0$) |
+| `id` | `int` | Somente Leitura |
+| `titulo` | `str` |  |
+| `autor` | `str` |  |
+| `isbn` | `str` |  (Valida formato ISBN) |
+| `exemplares` | `int` |  (Valida valor $\ge 0$) |
 | `em_estoque` | `bool` | **Propriedade Calculada:** Retorna `exemplares > 0` |
 
 **Rotas a implementar:**
@@ -232,14 +232,14 @@ Um viveiro publica seu catálogo online com plantas, preços e dados de cultivo.
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
-| `nome_popular` | `str` | Getter/Setter |
-| `nome_cientifico` | `str` | Getter/Setter (Formatação padronizada) |
-| `tipo` | `str` | Getter/Setter |
-| `preco` | `float` | Getter/Setter (Valida preço $> 0$) |
-| `em_estoque` | `bool` | Getter/Setter |
+| `id` | `int` | Somente Leitura |
+| `nome_popular` | `str` |  |
+| `nome_cientifico` | `str` |  (Formatação padronizada) |
+| `tipo` | `str` |  |
+| `preco` | `float` |  (Valida preço $> 0$) |
+| `em_estoque` | `bool` |  |
 
 **Rotas a implementar:**
 
@@ -264,14 +264,14 @@ Um abrigo de animais registra os pets resgatados.
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
-| `nome` | `str` | Getter/Setter |
-| `especie` | `str` | Getter/Setter |
-| `raca` | `str` | Getter/Setter |
-| `idade` | `int` | Getter/Setter (Valida idade $\ge 0$) |
-| `adotado` | `bool` | Getter/Setter |
+| `id` | `int` | Somente Leitura |
+| `nome` | `str` |  |
+| `especie` | `str` |  |
+| `raca` | `str` |  |
+| `idade` | `int` |  (Valida idade $\ge 0$) |
+| `adotado` | `bool` |  |
 | `fase_vida` | `str` | **Propriedade Calculada:** Derivada da idade e espécie |
 
 **Rotas a implementar:**
@@ -297,14 +297,14 @@ Plataforma de cursos online gerencia disciplinas, carga horária e valores.
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
-| `titulo` | `str` | Getter/Setter |
-| `instrutor` | `str` | Getter/Setter |
-| `carga_horaria` | `int` | Getter/Setter (Valida valor $> 0$) |
-| `nivel` | `str` | Getter/Setter (Valida valores permitidos) |
-| `preco` | `float` | Getter/Setter (Valida valor $\ge 0$) |
+| `id` | `int` | Somente Leitura |
+| `titulo` | `str` |  |
+| `instrutor` | `str` |  |
+| `carga_horaria` | `int` |  (Valida valor $> 0$) |
+| `nivel` | `str` |  (Valida valores permitidos) |
+| `preco` | `float` |  (Valida valor $\ge 0$) |
 | `valor_por_hora` | `float` | **Propriedade Calculada:** `preco / carga_horaria` |
 
 **Rotas a implementar:**
@@ -330,13 +330,13 @@ O setor de TI controla o patrimônio de hardware da empresa.
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
+| `id` | `int` | Somente Leitura |
 | `patrimonio` | `str` | Somente Leitura (Definido no cadastro) |
-| `descricao` | `str` | Getter/Setter |
-| `localizacao` | `str` | Getter/Setter |
-| `situacao` | `str` | Getter/Setter (Valida valores válidos de estado) |
+| `descricao` | `str` |  |
+| `localizacao` | `str` |  |
+| `situacao` | `str` |  (Valida valores válidos de estado) |
 | `necessita_substituicao`| `bool` | **Propriedade Calculada:** Avalia status de descarte/manutenção |
 
 **Rotas a implementar:**
@@ -363,14 +363,14 @@ Registro pessoal de livros lidos e em andamento.
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
-| `titulo` | `str` | Getter/Setter |
-| `autor` | `str` | Getter/Setter |
-| `data_inicio` | `date` | Getter/Setter |
-| `data_fim` | `date` ou `None` | Getter/Setter (Valida $\ge data\_inicio$) |
-| `avaliacao` | `int` ou `None` | Getter/Setter (Exige `data_fim` e valida $1 \le nota \le 5$) |
+| `id` | `int` | Somente Leitura |
+| `titulo` | `str` |  |
+| `autor` | `str` |  |
+| `data_inicio` | `date` |  |
+| `data_fim` | `date` ou `None` |  (Valida $\ge data\_inicio$) |
+| `avaliacao` | `int` ou `None` |  (Exige `data_fim` e valida $1 \le nota \le 5$) |
 | `concluida` | `bool` | **Propriedade Calculada:** Check de preenchimento da `data_fim` |
 | `dias_de_leitura` | `int` | **Propriedade Calculada:** Diferença em dias entre início e fim/hoje |
 
@@ -397,13 +397,13 @@ Publicação de opções de refeições para acompanhamento nutricional.
 
 **Atributos e Propriedades:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
-| `id` | `int` | Público / Somente Leitura |
-| `nome` | `str` | Getter/Setter |
-| `tipo` | `str` | Getter/Setter |
-| `calorias` | `int` | Getter/Setter (Valida valor $> 0$) |
-| `ingredientes` | `list[str]` | Getter/Setter (Retorna cópia para evitar mutação indevida) |
+| `id` | `int` | Somente Leitura |
+| `nome` | `str` |  |
+| `tipo` | `str` |  |
+| `calorias` | `int` |  (Valida valor $> 0$) |
+| `ingredientes` | `list[str]` |  (Retorna cópia para evitar mutação indevida) |
 | `densidade_calorica` | `str` | **Propriedade Calculada:** Retorna nível calórico |
 
 **Rotas a implementar:**
@@ -435,22 +435,22 @@ Controle de mesas e agendamentos em um restaurante.
 
 **Atributos e Propriedades — Mesa:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
-| `numero` | `int` | Getter/Setter |
-| `capacidade` | `int` | Getter/Setter (Valida valor $> 0$) |
+| `numero` | `int` |  |
+| `capacidade` | `int` |  (Valida valor $> 0$) |
 
 **Atributos e Propriedades — Reserva:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
 | `mesa_id` | `int` | Somente Leitura |
-| `cliente_nome` | `str` | Getter/Setter |
-| `data` | `date` | Getter/Setter (Não permite datas passadas) |
-| `horario` | `str` | Getter/Setter |
-| `pessoas` | `int` | Getter/Setter (Valida $\le$ capacidade da mesa) |
+| `cliente_nome` | `str` |  |
+| `data` | `date` |  (Não permite datas passadas) |
+| `horario` | `str` |  |
+| `pessoas` | `int` |  (Valida $\le$ capacidade da mesa) |
 
 **Rotas a implementar:**
 
@@ -474,22 +474,22 @@ Empréstimo de livros para leitores cadastrados.
 
 **Atributos e Propriedades — Livro:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
-| `titulo` | `str` | Getter/Setter |
-| `autor` | `str` | Getter/Setter |
-| `disponivel` | `bool` | Getter/Setter (Acesso controlado por operações de empréstimo) |
+| `titulo` | `str` |  |
+| `autor` | `str` |  |
+| `disponivel` | `bool` |  (Acesso controlado por operações de empréstimo) |
 
 **Atributos e Propriedades — Emprestimo:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
 | `livro_id` | `int` | Somente Leitura |
-| `leitor_nome` | `str` | Getter/Setter |
+| `leitor_nome` | `str` |  |
 | `data_emprestimo` | `date` | Somente Leitura |
-| `data_prevista` | `date` | Getter/Setter (Deve ser pós data de empréstimo) |
+| `data_prevista` | `date` |  (Deve ser pós data de empréstimo) |
 | `em_atraso` | `bool` | **Propriedade Calculada:** Comparação de `data_prevista` com a data atual |
 
 **Rotas a implementar:**
@@ -515,21 +515,21 @@ Registro de horários de trabalho de funcionários.
 
 **Atributos e Propriedades — Funcionario:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
-| `nome` | `str` | Getter/Setter |
-| `cargo` | `str` | Getter/Setter |
-| `departamento` | `str` | Getter/Setter |
+| `nome` | `str` |  |
+| `cargo` | `str` |  |
+| `departamento` | `str` |  |
 
 **Atributos e Propriedades — RegistroPonto:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
 | `funcionario_id` | `int` | Somente Leitura |
 | `entrada` | `datetime` | Somente Leitura |
-| `saida` | `datetime` ou `None` | Getter/Setter (Valida se $> entrada$) |
+| `saida` | `datetime` ou `None` |  (Valida se $> entrada$) |
 | `horas_trabalhadas` | `float` ou `None` | **Propriedade Calculada:** Diferença calculada entre entrada e saída |
 | `ponto_aberto` | `bool` | **Propriedade Calculada:** Retorna `True` se `saida is None` |
 
@@ -555,29 +555,29 @@ Gerenciamento de vendas, estoque de produtos e cálculo de itens.
 
 **Atributos e Propriedades — Produto:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
-| `nome` | `str` | Getter/Setter |
-| `preco` | `float` | Getter/Setter (Valida valor $> 0$) |
-| `estoque` | `int` | Getter/Setter (Valida valor $\ge 0$) |
+| `nome` | `str` |  |
+| `preco` | `float` |  (Valida valor $> 0$) |
+| `estoque` | `int` |  (Valida valor $\ge 0$) |
 
 **Atributos e Propriedades — ItemPedido:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `pedido_id` | `int` | Somente Leitura |
 | `produto_id` | `int` | Somente Leitura |
-| `quantidade` | `int` | Getter/Setter (Valida se $\le$ estoque) |
+| `quantidade` | `int` |  (Valida se $\le$ estoque) |
 | `subtotal` | `float` | **Propriedade Calculada:** `quantidade * preco_produto` |
 
 **Atributos e Propriedades — Pedido:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
-| `cliente` | `str` | Getter/Setter |
-| `status` | `str` | Getter/Setter (Valida transição: pendente -> pago -> enviado) |
+| `cliente` | `str` |  |
+| `status` | `str` |  (Valida transição: pendente -> pago -> enviado) |
 | `total` | `float` | **Propriedade Calculada:** Soma de todos os `subtotal` dos itens |
 
 **Rotas a implementar:**
@@ -603,32 +603,32 @@ Cadastro de tutores, pets e consultas médicas veterinárias.
 
 **Atributos e Propriedades — Dono:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
-| `nome` | `str` | Getter/Setter |
-| `telefone` | `str` | Getter/Setter (Validação numérica) |
+| `nome` | `str` |  |
+| `telefone` | `str` |  (Validação numérica) |
 
 **Atributos e Propriedades — Pet:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
 | `dono_id` | `int` | Somente Leitura |
-| `nome` | `str` | Getter/Setter |
-| `especie` | `str` | Getter/Setter |
-| `nascimento` | `date` | Getter/Setter (Valida data $\le$ hoje) |
+| `nome` | `str` |  |
+| `especie` | `str` |  |
+| `nascimento` | `date` |  (Valida data $\le$ hoje) |
 | `idade_anos` | `int` | **Propriedade Calculada:** Idade baseada no nascimento |
 
 **Atributos e Propriedades — Consulta:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
 | `pet_id` | `int` | Somente Leitura |
-| `veterinario` | `str` | Getter/Setter |
-| `data` | `date` | Getter/Setter |
-| `diagnostico` | `str` | Getter/Setter |
+| `veterinario` | `str` |  |
+| `data` | `date` |  |
+| `diagnostico` | `str` |  |
 
 **Rotas a implementar:**
 
@@ -653,22 +653,22 @@ Gestão de ocupação e tarifação de veículos.
 
 **Atributos e Propriedades — Vaga:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
-| `numero` | `int` | Getter/Setter |
-| `tipo` | `str` | Getter/Setter |
-| `ocupada` | `bool` | Getter/Setter (Atualizado com base nos tickets ativos) |
+| `numero` | `int` |  |
+| `tipo` | `str` |  |
+| `ocupada` | `bool` |  (Atualizado com base nos tickets ativos) |
 
 **Atributos e Propriedades — Ticket:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
 | `vaga_id` | `int` | Somente Leitura |
-| `placa` | `str` | Getter/Setter (Valida formato de placa) |
+| `placa` | `str` |  (Valida formato de placa) |
 | `entrada` | `datetime` | Somente Leitura |
-| `saida` | `datetime` ou `None` | Getter/Setter (Valida se $> entrada$) |
+| `saida` | `datetime` ou `None` |  (Valida se $> entrada$) |
 | `duracao_horas` | `int` | **Propriedade Calculada:** Horas cobradas (teto de frações) |
 | `valor_total` | `float` | **Propriedade Calculada:** `duracao_horas * 5.0` |
 
@@ -694,22 +694,22 @@ Controle estrito de estoque hospitalar e alertas de reposição.
 
 **Atributos e Propriedades — Medicamento:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
-| `nome` | `str` | Getter/Setter |
-| `estoque_atual` | `int` | Getter/Setter (Garante valor $\ge 0$) |
-| `estoque_minimo` | `int` | Getter/Setter (Garante valor $> 0$) |
+| `nome` | `str` |  |
+| `estoque_atual` | `int` |  (Garante valor $\ge 0$) |
+| `estoque_minimo` | `int` |  (Garante valor $> 0$) |
 | `abaixo_do_minimo` | `bool` | **Propriedade Calculada:** `estoque_atual < estoque_minimo` |
 
 **Atributos e Propriedades — Dispensacao:**
 
-| Atributo / Propriedade | Tipo | Acesso / Regra de Encapsulamento |
+| Atributo / Propriedade | Tipo |Regras de validação|
 |---|---|---|
 | `id` | `int` | Somente Leitura |
 | `medicamento_id` | `int` | Somente Leitura |
-| `paciente` | `str` | Getter/Setter |
-| `quantidade` | `int` | Getter/Setter (Valida se $> 0$ e $\le$ estoque) |
+| `paciente` | `str` |  |
+| `quantidade` | `int` |  (Valida se $> 0$ e $\le$ estoque) |
 | `data` | `datetime` | Somente Leitura |
 
 **Rotas a implementar:**
