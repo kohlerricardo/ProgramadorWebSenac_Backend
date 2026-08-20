@@ -3,7 +3,7 @@ from sqlmodel import create_engine, Session
 from sshtunnel import SSHTunnelForwarder
 from config.Config import settings
 from dataclasses import dataclass
-
+import urllib
 @dataclass
 class Database:
 
@@ -43,8 +43,9 @@ class Database:
             remote_bind_address=(settings.db_host, settings.db_port)  # Serviço remoto (ex: MySQL)
             )
         self._server.start()
+        encoded_password = urllib.parse.quote_plus(settings.db_password) ##necessário para senhas que contenham caracteres especiais
         url = (
-            f"mysql+pymysql://{settings.db_user}:{settings.db_password}"
+            f"mysql+pymysql://{settings.db_user}:{encoded_password}"
             f"@127.0.0.1:{self._server.local_bind_port}/{settings.db_name}"
             f"?charset=utf8mb4"
         )

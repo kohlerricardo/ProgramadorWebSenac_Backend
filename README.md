@@ -39,6 +39,9 @@ Neste repositório serão colocados os arquivos contendo:
 |[Tutorial instalação FastAPI + Uvicorn](https://github.com/kohlerricardo/ProgramadorWebSenac_Backend/blob/main/ProjetoBase/Instala%C3%A7%C3%A3oFastapi.md)|
 |[Lista de códigos de erro HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)|
 |[Métodos HTTP](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Reference/Methods)|
+|[Curso FastAPI - Dunossauro](https://fastapidozero.dunossauro.com/estavel/)|
+|[FastAPI Cookbook](https://github.com/kohlerricardo/ProgramadorWebSenac_Backend/blob/main/Livros/FastAPI_Cookbook.pdf)|
+|[FastAPI Modern Python Web Development](https://github.com/kohlerricardo/ProgramadorWebSenac_Backend/blob/main/Livros/FastAPI_Modern_Python_Web_Development.pdf)|
 
 ### Links úteis
 #### Backend
