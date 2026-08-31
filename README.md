@@ -10,12 +10,12 @@
 ### Backend
 | Julho |  Agosto | Setembro | Outubro | Novembro | Dezembro |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| 13/07 | - | - | - | - | - |
-| 14/07 | - | - | - | - | - |
-| 20/07 | - | - | - | - | - |
-| 21/07 | - | - | - | - | - |
-| 27/07 **Avaliação** | - | - | - | - | - |
-| 28/07 | - | - | - | - | - |
+| 13/07 | 03/08 | 14/09 | - | - | - |
+| 14/07 | 04/08 | 21/09 | - | - | - |
+| 20/07 | 10/08 | 28/09 | - | - | - |
+| 21/07 | 17/08 | - | - | - | - |
+| 27/07 **Avaliação** | 24/08 | - | - | - | - |
+| 28/07 | 31/08 | - | - | - | - |
 | -     | - | - | - | - | - |
 | -     | - | - | - | - | - |
 
@@ -43,6 +43,7 @@ Neste repositório serão colocados os arquivos contendo:
 |[FastAPI Cookbook](https://github.com/kohlerricardo/ProgramadorWebSenac_Backend/blob/main/Livros/FastAPI_Cookbook.pdf)|
 |[FastAPI Modern Python Web Development](https://github.com/kohlerricardo/ProgramadorWebSenac_Backend/blob/main/Livros/FastAPI_Modern_Python_Web_Development.pdf)|
 
+---
 ### Links úteis
 #### Backend
 - Documentação **Python v3.13**
