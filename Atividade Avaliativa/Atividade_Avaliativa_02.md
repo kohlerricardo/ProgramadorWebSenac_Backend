@@ -2,13 +2,16 @@
 ___
 **SENAC Videira**
 **Professor:** Ricardo Köhler
+
 **E-mail:** ricardo.kohler@prof.sc.senac.br
+
 ### **Data de entrega: 28/09/2026**
 ### **Horário Limite: 23:59:59**
+#### **Formato de entrega**: Link de repositório no GitHub.
 ___
 
 
-> Considere o cenário da "Operação Cadê o Equipamento?" e a modelagem realizada para a atividade avaliatica 01. Sabendo que o objetivo da avaliação é manipular os dados oriundos de um frontend, sua tarefa é proporcionar a integração com a base de dados modelada e realizar corretamente as operações **Create**, **Retrieve**, **Update** e **Delete** para cada entidade modelada.
+> Considere o cenário da "Operação Cadê o Equipamento?" e a modelagem realizada para a atividade avaliativa 01. Sabendo que o objetivo da avaliação é manipular os dados oriundos de um frontend, sua tarefa é proporcionar a integração com a base de dados modelada e realizar corretamente as operações **Create**, **Retrieve**, **Update** e **Delete** para cada entidade modelada.
 ---
 
 
