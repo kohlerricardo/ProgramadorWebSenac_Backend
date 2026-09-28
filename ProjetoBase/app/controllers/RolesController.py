@@ -1,46 +1,41 @@
-# Importações básicas de sessão, SELECT e exceções do SQLAlchemy
 from sqlmodel import Session, select
 from sqlalchemy.exc import OperationalError, IntegrityError
-from entidades.models import CategoriaEquipamento, CategoriaEquipamentoPublico
+from entidades.models import Roles, RolesPublico
 
 
 # ----------------------------------------------------------------------------
-# LISTAR TODAS AS CATEGORIAS
+# LISTAR TODAS AS ROLES
 # ----------------------------------------------------------------------------
-def buscar_categorias(db: Session) -> list[CategoriaEquipamento]:
+def buscar_roles(db: Session) -> list[Roles]:
     try:
-        # SELECT * FROM categoria_equipamento
-        return db.exec(select(CategoriaEquipamento)).all()
+        return db.exec(select(Roles)).all()
     except OperationalError as e:
         raise RuntimeError("Falha de comunicação com o banco de dados.") from e
 
 
 # ----------------------------------------------------------------------------
-# BUSCAR UMA CATEGORIA PELO ID
+# BUSCAR ROLE PELO ID
 # ----------------------------------------------------------------------------
-def buscar_categoria_por_id(db: Session, categoria_id: int) -> CategoriaEquipamento:
+def buscar_role_por_id(db: Session, role_id: int) -> Roles:
     try:
-        categoria = db.get(CategoriaEquipamento, categoria_id)
-        if not categoria:
-            raise KeyError(f"Categoria de ID {categoria_id} não encontrada.")
-        return categoria
+        role = db.get(Roles, role_id)
+        if not role:
+            raise KeyError(f"Role de ID {role_id} não encontrada.")
+        return role
     except OperationalError as e:
         raise RuntimeError("Falha de comunicação com o banco de dados.") from e
 
 
 # ----------------------------------------------------------------------------
-# CADASTRAR CATEGORIA
+# CADASTRAR ROLE
 # ----------------------------------------------------------------------------
-def cadastrar_categoria(
-    db: Session, dados_entrada: CategoriaEquipamentoPublico
-) -> CategoriaEquipamento:
+def cadastrar_role(db: Session, dados_entrada: RolesPublico) -> Roles:
     try:
-        # Cria a instância de tabela a partir do schema público
-        nova_categoria = CategoriaEquipamento(**dados_entrada.model_dump())
-        db.add(nova_categoria)
+        nova_role = Roles(**dados_entrada.model_dump())
+        db.add(nova_role)
         db.commit()
-        db.refresh(nova_categoria)
-        return nova_categoria
+        db.refresh(nova_role)
+        return nova_role
     except IntegrityError as e:
         db.rollback()
         raise ValueError("Erro nos dados informados, verifique e tente novamente.") from e
@@ -50,26 +45,22 @@ def cadastrar_categoria(
 
 
 # ----------------------------------------------------------------------------
-# ATUALIZAR CATEGORIA
+# ATUALIZAR ROLE
 # ----------------------------------------------------------------------------
-def atualizar_categoria(
-    db: Session, categoria_id: int, dados_atualizados: CategoriaEquipamentoPublico
-) -> CategoriaEquipamento:
+def atualizar_role(db: Session, role_id: int, dados_atualizados: RolesPublico) -> Roles:
     try:
-        # PASSO 1 — Confere existência
-        categoria = db.get(CategoriaEquipamento, categoria_id)
-        if not categoria:
-            raise KeyError(f"Categoria de ID {categoria_id} não encontrada.")
+        role = db.get(Roles, role_id)
+        if not role:
+            raise KeyError(f"Role de ID {role_id} não encontrada.")
 
-        # PASSO 2 — Aplica apenas os campos enviados
+        # Aplica só os campos enviados
         for key, value in dados_atualizados.model_dump(exclude_unset=True).items():
-            setattr(categoria, key, value)
+            setattr(role, key, value)
 
-        # PASSO 3 — Persiste
-        db.add(categoria)
+        db.add(role)
         db.commit()
-        db.refresh(categoria)
-        return categoria
+        db.refresh(role)
+        return role
     except IntegrityError as e:
         db.rollback()
         raise ValueError("Erro de integridade nos dados informados.") from e
@@ -79,21 +70,21 @@ def atualizar_categoria(
 
 
 # ----------------------------------------------------------------------------
-# DELETAR CATEGORIA
+# DELETAR ROLE
 # ----------------------------------------------------------------------------
-def deletar_categoria(db: Session, categoria_id: int) -> None:
+def deletar_role(db: Session, role_id: int) -> None:
     try:
-        categoria = db.get(CategoriaEquipamento, categoria_id)
-        if not categoria:
-            raise KeyError(f"Categoria de ID {categoria_id} não encontrada.")
+        role = db.get(Roles, role_id)
+        if not role:
+            raise KeyError(f"Role de ID {role_id} não encontrada.")
 
-        db.delete(categoria)
+        db.delete(role)
         db.commit()
     except IntegrityError as e:
-        # Se houver equipamento apontando para esta categoria, a FK barra a exclusão
+        # FK usuario_has_role pode estar apontando para esta role
         db.rollback()
         raise ValueError(
-            "Não é possível excluir: existem equipamentos vinculados."
+            "Não é possível excluir: existem usuários vinculados a esta role."
         ) from e
     except OperationalError as e:
         db.rollback()

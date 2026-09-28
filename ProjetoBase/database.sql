@@ -36,7 +36,7 @@ CREATE TABLE `equipamento` (
   `equipamento_patrimonio` varchar(20) NOT NULL,
   `equipamento_categoria_equipamento_id` int(11) NOT NULL,
   `equipamento_descricao` varchar(255) NOT NULL,
-  `equipamento_status_equipamento` enum('DISPONÍVEL','RESERVADO','EM MANUTENÇÃO','INDISPONÍVEL') DEFAULT 'DISPONÍVEL',
+  `equipamento_status_equipamento` enum('DISPONIVEL','RESERVADO','EM_MANUTENCAO','INDISPONIVEL') DEFAULT 'DISPONIVEL',
   PRIMARY KEY (`equipamento_id`),
   KEY `FK_equipamento_categoria_equipamento` (`equipamento_categoria_equipamento_id`),
   CONSTRAINT `FK_equipamento_categoria_equipamento` FOREIGN KEY (`equipamento_categoria_equipamento_id`) REFERENCES `categoria_equipamento` (`categoria_id`)
