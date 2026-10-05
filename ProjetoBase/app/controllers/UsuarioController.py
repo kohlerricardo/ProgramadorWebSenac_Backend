@@ -1,7 +1,7 @@
 from sqlmodel import Session, select
 from sqlalchemy.exc import OperationalError, IntegrityError
 from entidades.models import Usuario, UsuarioPublico
-
+from core.security import cria_hash_senha
 
 # ----------------------------------------------------------------------------
 # LISTAR USUÁRIOS
@@ -31,10 +31,11 @@ def buscar_usuario_por_id(db: Session, usuario_id: int) -> Usuario:
 # Recebe o schema público + a senha separadamente, para não expor
 # o campo de senha no schema de entrada principal.
 # ----------------------------------------------------------------------------
-def cadastrar_usuario(db: Session, dados_entrada: UsuarioPublico, senha: str) -> Usuario:
+def cadastrar_usuario(db: Session, dados_entrada: UsuarioPublico, senha: str) -> UsuarioPublico:
     try:
         # Combina os dados públicos com a senha para construir a tabela
-        novo_usuario = Usuario(**dados_entrada.model_dump(), usuario_senha=senha)
+        print(f"senha->{senha}")
+        novo_usuario = Usuario(**dados_entrada.model_dump(), usuario_senha=cria_hash_senha(senha))
         db.add(novo_usuario)
         db.commit()
         db.refresh(novo_usuario)

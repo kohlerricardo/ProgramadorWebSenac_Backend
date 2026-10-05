@@ -3,7 +3,7 @@ from sqlmodel import Session
 
 from entidades.models import UsuarioHasRole, UsuarioHasRolePublico
 from controllers import UsuarioHasRoleController
-from dependecies.dependencies import database
+from dependencies.dependencies import database
 
 usuario_has_role_router = APIRouter()
 

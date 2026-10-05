@@ -3,7 +3,7 @@ from sqlmodel import Session
 
 from entidades.models import Emprestimo, EmprestimoPublico
 from controllers import EmprestimoController
-from dependecies.dependencies import database
+from dependencies.dependencies import database
 
 emprestimo_router = APIRouter()
 

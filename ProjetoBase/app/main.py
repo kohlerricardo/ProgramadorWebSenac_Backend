@@ -5,6 +5,7 @@ from routes.UsuarioRoutes import usuario_router
 from routes.UsuarioHasRoleRoutes import usuario_has_role_router
 from routes.EmprestimoRoutes import emprestimo_router
 from routes.EquipamentoRoutes import equipamento_router
+from routes.AuthRoutes import auth_routes
 
 app = FastAPI(
     title="Minha API",
@@ -19,6 +20,7 @@ app.include_router(usuario_router)
 app.include_router(usuario_has_role_router)
 app.include_router(emprestimo_router)
 app.include_router(equipamento_router)
+app.include_router(auth_routes)
 
 
 #inclusão de rotas para equipamentos

@@ -4,7 +4,7 @@ from sqlmodel import Session
 
 from entidades.models import UsuarioPublico
 from controllers import UsuarioController
-from dependecies.dependencies import database
+from dependencies.dependencies import database
 
 usuario_router = APIRouter()
 

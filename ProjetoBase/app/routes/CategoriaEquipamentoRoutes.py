@@ -3,8 +3,8 @@ from sqlmodel import Session
 
 from entidades.models import CategoriaEquipamento, CategoriaEquipamentoPublico
 from controllers import CategoriaEquipamentoController
-from dependecies.dependencies import database
-
+from dependencies.dependencies import database
+from dependencies.auth import require_roles
 categoria_equipamento_router = APIRouter()
 
 
@@ -13,6 +13,7 @@ categoria_equipamento_router = APIRouter()
     "/categorias-equipamento",
     response_model=list[CategoriaEquipamento],
     status_code=status.HTTP_200_OK,
+    dependencies=[Depends(require_roles("Gestor"))]
 )
 def buscar_categorias(db: Session = Depends(database.get_db)):
     try:

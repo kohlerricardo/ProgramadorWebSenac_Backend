@@ -3,7 +3,7 @@ from sqlmodel import Session
 
 from entidades.models import Roles, RolesPublico
 from controllers import RolesController
-from dependecies.dependencies import database
+from dependencies.dependencies import database
 
 roles_router = APIRouter()
 

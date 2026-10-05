@@ -10,7 +10,7 @@ from sqlmodel import Session
 
 from entidades.models import Equipamento, EquipamentoPublico
 from controllers import EquipamentoController
-from dependecies.dependencies import database
+from dependencies.dependencies import database
 
 # Router sem prefixo/tags para ficar igual ao seu padrão
 equipamento_router = APIRouter()
