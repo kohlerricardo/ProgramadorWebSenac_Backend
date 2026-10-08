@@ -12,8 +12,20 @@ from sqlmodel import Field, SQLModel, Relationship
 from enum import Enum
 from typing import Optional
 from datetime import datetime
+
 from pydantic import BaseModel
 
+class UsuarioLogin(BaseModel):
+    email:str
+    senha:str
+class UsuarioLogado(BaseModel):
+    id:int
+    nome:str
+    email:str
+    #Relacionamento Perfil <-> Usuário N:N
+    roles:list[str]
+    #Relacionamento Perfil <-> Usário 1:N
+    #role:str
 # ============================================================================
 # CATEGORIA DE EQUIPAMENTO
 # ----------------------------------------------------------------------------
@@ -185,19 +197,7 @@ class UsuarioHasRole(UsuarioHasRoleBase, table=True):
 class UsuarioHasRolePublico(UsuarioHasRoleBase):
     pass
 
-#=====================
-# Modelos para login
 
-class UsuarioLogin(BaseModel):
-    username:str
-    password:str
-    
-class UsuarioAutenticado(BaseModel):
-    usuario_id:int
-    usuario_nome:str
-    usuario_sobrenome :str
-    usuario_email :str
-    usuario_roles :list[str]
 # 
 # ============================================================================
 # EMPRESTIMO

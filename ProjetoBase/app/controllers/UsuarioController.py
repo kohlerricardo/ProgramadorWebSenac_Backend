@@ -35,7 +35,7 @@ def cadastrar_usuario(db: Session, dados_entrada: UsuarioPublico, senha: str) ->
     try:
         # Combina os dados públicos com a senha para construir a tabela
         print(f"senha->{senha}")
-        novo_usuario = Usuario(**dados_entrada.model_dump(), usuario_senha=cria_hash_senha(senha))
+        novo_usuario = Usuario(**dados_entrada.model_dump(), usuario_senha=cria_hash_senha(senha))#lembrar de adicionar a função de hash
         db.add(novo_usuario)
         db.commit()
         db.refresh(novo_usuario)
